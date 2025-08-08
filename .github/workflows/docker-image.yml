@@ -8,7 +8,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}-mcp
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
 
@@ -51,14 +51,31 @@ jobs:
           flavor: |
             latest=false
             
-      # Build base image once and cache it
-      - name: Build base image for caching
+      - name: Docker meta mcp
+        id: meta-mcp
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-mcp
+          flavor: |
+            latest=false
+            
+      # Build image
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+      # Build image mcp
+      - name: Build image for mcp
         uses: docker/build-push-action@v5
         with:
           context: ./packages/markitdown-mcp
           push: true
           load: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta-mcp.outputs.tags }}
 
 
 
