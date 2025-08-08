@@ -64,7 +64,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           push: true
           load: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -74,7 +74,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./packages/markitdown-mcp
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           push: true
           load: true
           tags: ${{ steps.meta-mcp.outputs.tags }}
