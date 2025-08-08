@@ -61,20 +61,20 @@ jobs:
             
       # Build image
       - name: Build image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           load: true
           tags: ${{ steps.meta.outputs.tags }}
 
       # Build image mcp
       - name: Build image for mcp
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./packages/markitdown-mcp
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           load: true
           tags: ${{ steps.meta-mcp.outputs.tags }}
